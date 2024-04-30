@@ -143,4 +143,4 @@ WHERE top_rank_customers <= 3;
 | RB-19360    | Raymond Buch  | 15117.35    | 3                  |
 
 ## Data Visualization
-As a complement to this project, I created a Superstore Sales Dashboard in Tableau Public linked here [https://public.tableau.com/shared/DH8Q3559B?:display_count=n&:origin=viz_share_link](url). This dashboard provides a graphical representation of the key metrics most important to stakeholders at Superstore.
+As a complement to this project, I created a Superstore Sales Dashboard in Tableau Public linked here [Superstore Sales Analysis](https://public.tableau.com/shared/DH8Q3559B?:display_count=n&:origin=viz_share_link). This dashboard provides a graphical representation of the key metrics most important to stakeholders at Superstore.
