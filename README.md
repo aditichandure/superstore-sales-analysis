@@ -8,6 +8,7 @@ Superstore is a U.S. based small retail business that sells furniture, office su
 
 ## Requirements
 The Superset dataset used in this project was obtained from Kaggle and converted from an XSLX file to a CSV file for easier handling. The analysis was performed using MySQL and complemented using Tableau to create an interactive dashboard for data visualization.
+The data is publicly available through Kaggle under [https://www.kaggle.com/datasets/ishanshrivastava28/superstore-sales](url) .It comes with 9995 rows with 9994 rows of pure data and 1 row being column headers. It contains the data of 793 customers.
 
 ## Business Questions
 1. What is the yearly total sales and profit?
@@ -36,3 +37,5 @@ There appears to be 0 duplicate entries across all columns.
 ### Null Values
 Checking for null values involves identifying any missing or undefined data in each column.
 There were no null values found in the dataset.
+
+### Update Table
