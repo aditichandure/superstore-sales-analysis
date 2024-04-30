@@ -8,7 +8,7 @@ Superstore is a U.S. based small retail business that sells furniture, office su
 
 ## Requirements
 The Superset dataset used in this project was obtained from Kaggle and converted from an XSLX file to a CSV file for easier handling. The analysis was performed using MySQL and complemented using Tableau to create an interactive dashboard for data visualization.
-The data is publicly available through Kaggle under [https://www.kaggle.com/datasets/ishanshrivastava28/superstore-sales](url) .It comes with 9995 rows with 9994 rows of pure data and 1 row being column headers. It contains the data of 793 customers. The data contains 21 columns namely; Row ID, Order ID, Order Date, Ship Date, Ship Mode, Customer ID , Customer Name, Segment, Postal Code, City, State, Country, Region, Product ID, Category, Sub-Category, Product Name, Sales, Quantity, Discount and Profit.
+The data is publicly available through Kaggle. It comes with 9995 rows with 9994 rows of pure data and 1 row being column headers. It contains the data of 793 customers. The data contains 21 columns namely; Row ID, Order ID, Order Date, Ship Date, Ship Mode, Customer ID , Customer Name, Segment, Postal Code, City, State, Country, Region, Product ID, Category, Sub-Category, Product Name, Sales, Quantity, Discount and Profit.
 The only limitations of our dataset that I could mention is that the most recent data point was almost 10 years ago. So our data is not current. However, our data is quite reliable, original, comprehensive and is cited.
 
 ## Business Questions
@@ -143,4 +143,4 @@ WHERE top_rank_customers <= 3;
 | RB-19360    | Raymond Buch  | 15117.35    | 3                  |
 
 ## Data Visualization
-As a complement to this project, I created a Superstore Sales Dashboard in Tableau Public [https://public.tableau.com/app/profile/aditi.chandure/viz/superstore_17095550368050/SuperstoreSalesAnalysis](url). This dashboard provides a graphical representation of the key metrics most important to stakeholders at Superstore.
+As a complement to this project, I created a Superstore Sales Dashboard in Tableau Public linked here [https://public.tableau.com/shared/DH8Q3559B?:display_count=n&:origin=viz_share_link](url). This dashboard provides a graphical representation of the key metrics most important to stakeholders at Superstore.
