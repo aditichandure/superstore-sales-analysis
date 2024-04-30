@@ -95,7 +95,7 @@ from sample_superstore
 group by 1
 order by 2 desc;
 
--- -- Which subcategories have the highest and lowest total sales overall?
+-- Which subcategories have the highest and lowest total sales overall?
 (select sub_category, sum(sales) as total_sales
 from sample_superstore
 group by 1
@@ -194,7 +194,16 @@ limit 15;
 select segment, sum(sales) as total_sales, sum(profit) as total_profit
 from sample_superstore
 group by 1
-order by 2 desc; 
+order by 2 desc;
+
+-- Top 3 spending customers
+SELECT *
+FROM 
+	(SELECT customer_id, customer_name, SUM(sales) AS total_spend,
+		DENSE_RANK() OVER(ORDER BY SUM(sales) DESC) AS top_rank_customers
+	FROM sample_superstore
+	GROUP BY 1, 2) AS t1
+WHERE top_rank_customers <= 3; 
 
 -- How many customers do we have (unique customer IDs) in total?
 select count(distinct customer_id) as total_customers
