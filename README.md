@@ -14,21 +14,9 @@ The only limitations of our dataset that I could mention is that the most recent
 ## Business Questions
 1. What is the yearly total sales and profit?
 2. What is the total sales, average sales and percent of total sales of each category?
-3. What are the sales by category and sub-category?
-4. What are the sales by region and state?
-5. Which subcategories have the highest and lowest total sales overall?
-6. Which subcategories have the highest and lowest total profit overall?
-7. Which region generates the highest sales and profit?
-8. What are the profit margins by region?
-9. What are the top and bottom states total sales and profits with their profit margins?What are the top and bottom states total sales and profits with their profit margins?
-10. What are the top 10 cities total sales and profits with their profit margins?
-11. What is discount vs average sales?
-12. What is the total discount per product category?
-13. What are the most discounted subcategories(product type)?
-14. What is the highest total sales and profit per category in each region?
-15. What is the highest total sales and profit per category in each state?
-16. What are the top 15 most profitable products?
-17. Which segment makes the most of our sales and profit?
+3. What are the profits by products(sub_category)?
+4. What are the sales by products(sub_category)?
+5. Which segment makes the most of our sales and profit?
 
 ## Data Cleaning and Preparation
 ### Duplicate Values 
@@ -51,7 +39,7 @@ SET order_year = YEAR(order_date);
 ```
 
 ## Data Analysis & Insights
-1. The data below shows how the profits overr the years have steadily increased with each year being more profitable than the other.
+1. The data below shows how the profits over the years have steadily increased with each year being more profitable than the other.
 ```
 SELECT order_year, SUM(sales) as total_sales, SUM(profit) as total_profit
 FROM sample_superstore
@@ -65,7 +53,7 @@ ORDER BY 1;
 | 2013       | 600533.77   | 80062.50     | 
 | 2014       | 733215.19   | 93439.73     | 
 
-2.	Technology is the largest category with total sales of $836.2K, accounting for about 36% of Superstore's total business. The Furniture and Office Supplies categories each account for 32% and 31% of total sales, respectively. Average sales in the Technology category are roughly 1.3x that of the Furniture category and 3.8x that of the Office Supplies category. 
+2.	Technology is the largest category with total sales of $835.2K, accounting for about 36% of Superstore's total business. The Furniture and Office Supplies categories each account for 32% and 30% of total sales, respectively.
 ```
 SELECT category, SUM(sales) AS total_sales, AVG(sales) AS average_sales,
 SUM(sales)/(SELECT SUM(sales) FROM sample_superstore)*100 AS percentage_of_total
@@ -78,3 +66,81 @@ ORDER BY 2 desc;
 | Technology      | 835900.14   | 454.540587 | 36.784093     |
 | Furniture       | 733047.06   | 353.446027 | 32.258005     |
 | Office Supplies | 703502.87   | 121.692245 | 30.957902     |
+
+3.	The most profitable subcategory is Copiers generating total profits of $55.6K. The least profitable subcategory is Tables which has a total profit loss of -$17.7K. The Tables subcategory is negatively contributing to Superstore's overall profitability and should be investigated as a potential subcategory to exit if profitability cannot be improved through more favorable cost structures.
+```
+(
+	SELECT subcategory, SUM(profit) AS total_profit
+	FROM superstore.orders
+	GROUP BY 1
+	ORDER BY 2 DESC
+	LIMIT 1
+)
+UNION
+(
+	SELECT subcategory, SUM(profit) AS total_profit
+	FROM superstore.orders
+	GROUP BY 1
+	ORDER BY 2 ASC
+	LIMIT 1
+);
+```
+| subcategory | total_profit |
+|-------------|--------------|
+| Copiers     |  55617.9     |
+| Tables      | -17725.59    |
+
+4. The best selling subcategory is Phones generating total sales of 329k. The least selling subcategory is Fasteners which has a total sales of 3008.63 . The Tables subcategory is negatively contributing to Superstore's overall profitability and should be investigated as a potential subcategory to exit if profitability cannot be improved through more favorable cost structures.
+```
+(
+	SELECT sub_category, SUM(sales) AS total_sales
+	FROM sample_superstore
+	GROUP BY 1
+	ORDER BY 2 DESC
+	LIMIT 1
+)
+UNION
+(
+	SELECT sub_category, SUM(sales) AS total_sales
+	FROM sample_superstore
+	GROUP BY 1
+	ORDER BY 2 ASC
+	LIMIT 1
+);
+```
+| subcategory | total_sales  |
+|-------------|--------------|
+| Phones      |  329753.14   |
+| Fasteners   |  3008.63     |
+
+5.	The most selling and profitable segment is mass Consumers with a total profit of $132.6K, while the least selling and profitable segment is Home Office with $59.8K in profits. Profits in the Consumer segment are about 2.2x that of Home Office; this is a strong indicator that mass Consumers should continue to be a strategic focus for Superstore.
+```
+SELECT segment, SUM(sales) AS total_sales, SUM(profit) AS total_profit
+FROM sample_superstore
+GROUP BY 1
+ORDER BY 2 DESC;
+```
+| segment     | total_sales | total_profit |
+|-------------|-------------| ------------ |
+| Consumer    | 1150166.18  |  132669.88   |
+| Corporate   | 696604.60   |   90366.57   |
+| Home Office | 425679.29   |   59822.01   |
+
+5.	The top 3 spending customers are Sean Miller ($25K), Tamara Chand ($19K), and Raymond Buch ($15K). Superstore's Sales & Marketing teams can strengthen customer retention and increase customer lifetime value through personalized marketing campaigns and loyalty programs that reward top spenders with highly desirable incentives. 
+```
+SELECT *
+FROM 
+	(SELECT customer_id, customer_name, SUM(sales) AS total_spend,
+		DENSE_RANK() OVER(ORDER BY SUM(sales) DESC) AS top_rank_customers
+	FROM sample_superstore
+	GROUP BY 1, 2) AS t1
+WHERE top_rank_customers <= 3;
+```
+| customer_id | customer_name | total_spend | top_rank_customers |
+|-------------|---------------|-------------|--------------------|
+| SM-20320    | Sean Miller   | 25043.07    | 1                  |
+| TC-20980    | Tamara Chand  | 19017.85    | 2                  |
+| RB-19360    | Raymond Buch  | 15117.35    | 3                  |
+
+## Data Visualization
+As a complement to this project, I created a Superstore Sales Dashboard in Tableau Public [https://public.tableau.com/app/profile/aditi.chandure/viz/superstore_17095550368050/SuperstoreSalesAnalysis](url). This dashboard provides a graphical representation of the key metrics most important to stakeholders at Superstore.
